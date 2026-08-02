@@ -1,0 +1,185 @@
+PS C:\Users\bkowa\Documents\code\AI-Course\PhenoFormer> (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& c:\Users\bkowa\Documents\code\AI-Course\PhenoFormer\.venv\Scripts\Activate.ps1)
+(.venv) PS C:\Users\bkowa\Documents\code\AI-Course\PhenoFormer> & c:\Users\bkowa\Documents\code\AI-Course\PhenoFormer\.venv\Scripts\python.exe c:/Users/bkowa/Documents/code/AI-Course/PhenoFormer/kowalski-phenoformer-implementation-v-1.1.py
+Setting spring time range : [-101, 264]
+Setting spring time range : [-101, 264]
+Seed set to 421999
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+┏━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┓
+┃   ┃ Name     ┃ Type        ┃ Params ┃ Mode  ┃ FLOPs ┃
+┡━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━┩
+│ 0 │ backbone │ PhenoFormer │  202 K │ train │     0 │
+└───┴──────────┴─────────────┴────────┴───────┴───────┘
+Trainable params: 202 K                                                                                                                                                                                                         
+Non-trainable params: 0                                                                                                                                                                                                         
+Total params: 202 K                                                                                                                                                                                                             
+Total estimated model params size (MB): 0.811                                                                                                                                                                                   
+Modules in train mode: 27                                                                                                                                                                                                       
+Modules in eval mode: 0                                                                                                                                                                                                         
+Total FLOPs: 0                                                                                                                                                                                                                  
+Epoch 11/299 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━ 206/248 0:00:20 • 0:00:05 10.02it/s v_num: 26.000 train/loss_SLL:LU: 0.560 train/loss_HCH:LU: 0.398 train/loss_LLL:LU: 0.668 train/loss_CRO:LU: 0.086 train/loss_EWB:LU:  
+                                                                                          0.148 train/loss_BEE:LU: 0.951 train/loss_HZL:LU: 0.601 train/loss_LAR:NE: 0.591 train/loss_SPR:NE: 0.319 train/loss: 0.470           
+                                                                                          train/rmse_SLL:LU: 8.588 train/rmse_HCH:LU: 9.030 train/rmse_LLL:LU: 9.642 train/rmse_CRO:LU: 4.229 train/rmse_EWB:LU: 5.344          
+                                                                                          train/rmse_BEE:LU: 10.796 train/rmse_HZL:LU: 12.567 train/rmse_LAR:NE: 12.577 train/rmse_SPR:NE: 8.609 train/rmse: 9.099              
+                                                                                          train/mae_SLL:LU: 7.020 train/mae_HCH:LU: 6.744 train/mae_LLL:LU: 9.642 train/mae_CRO:LU: 4.112 train/mae_EWB:LU: 5.344               
+                                                                                          train/mae_BEE:LU: 6.462 train/mae_HZL:LU: 10.125 train/mae_LAR:NE: 8.664 train/mae_SPR:NE: 6.812 train/mae: 7.238 val/loss_SLL:LU:    
+                                                                                          0.528 val/loss_HCH:LU: 0.358 val/loss_LLL:LU: 0.476 val/loss_CRO:LU: 0.404 val/loss_EWB:LU: 0.435 val/loss_BEE:LU: 0.519              
+                                                                                          val/loss_HZL:LU: 0.433 val/loss_LAR:NE: 0.371 val/loss_SPR:NE: 0.447 val/loss: 0.442 train/r2_SLL:LU: 0.377 train/r2_HCH:LU: 0.489    
+                                                                                          train/r2_LLL:LU: 0.405 train/r2_CRO:LU: 0.513 train/r2_EWB:LU: 0.537 train/r2_BEE:LU: 0.441 train/r2_HZL:LU: 0.466 train/r2_LAR:NE:   
+                                                                                          0.529 train/r2_SPR:NE: 0.453 train/r2: 0.468 val/rmse_SLL:LU: 8.367 val/rmse_HCH:LU: 8.291 val/rmse_LLL:LU: 8.258 val/rmse_CRO:LU:    
+Epoch 42/299 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0/248 0:00:25 • 0:00:00 0.00it/s v_num: 26.000 train/loss_SLL:LU: 0.066 train/loss_HCH:LU: 1.265   
+                                                                                       train/loss_LLL:LU: 0.341 train/loss_CRO:LU: 0.379                 
+Epoch 49/299 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 248/248 0:00:26 • 0:00:00 9.36it/s v_num: 26.000 train/loss_SLL:LU: 0.327 train/loss_HCH:LU: 0.558 
+                                                                                         train/loss_LLL:LU: 0.949 train/loss_CRO:LU: 0.060               
+                                                                                         train/loss_EWB:LU: 0.405 train/loss_BEE:LU: 0.268               
+                                                                                         train/loss_HZL:LU: 0.912 train/loss_LAR:NE: 0.245               
+                                                                                         train/loss_SPR:NE: 0.364 train/loss: 0.454 train/rmse_SLL:LU:   
+                                                                                         8.090 train/rmse_HCH:LU: 10.200 train/rmse_LLL:LU: 7.619        
+                                                                                         train/rmse_CRO:LU: 9.914 train/rmse_EWB:LU: 8.872               
+                                                                                         train/rmse_BEE:LU: 7.791 train/rmse_HZL:LU: 11.728              
+                                                                                         train/rmse_LAR:NE: 10.256 train/rmse_SPR:NE: 9.688 train/rmse:  
+                                                                                         9.351 train/mae_SLL:LU: 5.767 train/mae_HCH:LU: 7.531           
+                                                                                         train/mae_LLL:LU: 5.722 train/mae_CRO:LU: 7.573                 
+                                                                                         train/mae_EWB:LU: 6.684 train/mae_BEE:LU: 5.679                 
+                                                                                         train/mae_HZL:LU: 8.845 train/mae_LAR:NE: 7.747                 
+                                                                                         train/mae_SPR:NE: 7.324 train/mae: 6.986 val/loss_SLL:LU: 0.524 
+                                                                                         val/loss_HCH:LU: 0.342 val/loss_LLL:LU: 0.516 val/loss_CRO:LU:  
+                                                                                         0.384 val/loss_EWB:LU: 0.403 val/loss_BEE:LU: 0.415             
+                                                                                         val/loss_HZL:LU: 0.405 val/loss_LAR:NE: 0.319 val/loss_SPR:NE:  
+                                                                                         0.405 val/loss: 0.413 train/r2_SLL:LU: 0.488 train/r2_HCH:LU:   
+                                                                                         0.568 train/r2_LLL:LU: 0.562 train/r2_CRO:LU: 0.589             
+                                                                                         train/r2_EWB:LU: 0.632 train/r2_BEE:LU: 0.513 train/r2_HZL:LU:  
+                                                                                         0.519 train/r2_LAR:NE: 0.574 train/r2_SPR:NE: 0.518 train/r2:   
+                                                                                         0.552 val/rmse_SLL:LU: 8.419 val/rmse_HCH:LU: 8.082             
+                                                                                         val/rmse_LLL:LU: 8.420 val/rmse_CRO:LU: 8.919 val/rmse_EWB:LU:  
+                                                                                         8.884 val/rmse_BEE:LU: 7.105 val/rmse_HZL:LU: 10.395            
+                                                                                         val/rmse_LAR:NE: 9.239 val/rmse_SPR:NE: 9.579 val/rmse: 8.783   
+                                                                                         val/r2_SLL:LU: 0.403 val/r2_HCH:LU: 0.509 val/r2_LLL:LU: 0.414  
+                                                                                         val/r2_CRO:LU: 0.576 val/r2_EWB:LU: 0.527 val/r2_BEE:LU: 0.495  
+                                                                                         val/r2_HZL:LU: 0.402 val/r2_LAR:NE: 0.524 val/r2_SPR:NE: 0.554  
+                                                                                         val/r2: 0.489 val/mae_SLL:LU: 6.423 val/mae_HCH:LU: 6.347       
+                                                                                         val/mae_LLL:LU: 6.407 val/mae_CRO:LU: 6.816 val/mae_EWB:LU:     
+                                                                                         6.865 val/mae_BEE:LU: 5.379 val/mae_HZL:LU: 7.988               
+                                                                                         val/mae_LAR:NE: 6.953 val/mae_SPR:NE: 7.253 val/mae: 6.715      
+Saved weights to pf_checkpoints/transformer_weights.pt
+
+Logged training curve (from logs\kowalski_phenoformer\version_26\metrics.csv):
+       train/loss  train/rmse  val/loss
+epoch                                  
+0           0.664      10.614     0.517
+1           0.618      10.161     0.499
+2           0.624      10.067     0.473
+3           0.601      10.109     0.483
+4           0.542       9.569     0.460
+5           0.590       9.878     0.435
+6           0.573       9.784     0.451
+7           0.602       9.972     0.443
+8           0.525       9.421     0.440
+9           0.564       9.738     0.431
+10          0.543       9.465     0.442
+11          0.492       9.174     0.421
+12          0.558       9.546     0.421
+13          0.550       9.462     0.419
+14          0.538       9.363     0.424
+15          0.547       9.498     0.423
+16          0.459       8.849     0.428
+17          0.552       9.596     0.411
+18          0.481       9.014     0.406
+19          0.477       8.790     0.415
+20          0.555       9.349     0.408
+21          0.464       8.838     0.407
+22          0.511       9.203     0.418
+23          0.497       9.090     0.416
+24          0.491       8.964     0.416
+25          0.492       9.068     0.420
+26          0.456       8.720     0.405
+27          0.477       9.095     0.438
+28          0.505       9.088     0.409
+29          0.477       8.874     0.417
+30          0.477       8.934     0.414
+31          0.478       8.830     0.419
+32          0.495       8.899     0.414
+33          0.454       8.640     0.418
+34          0.483       8.813     0.407
+35          0.439       8.619     0.414
+36          0.455       8.765     0.415
+37          0.457       8.629     0.408
+38          0.529       9.420     0.412
+39          0.426       8.495     0.415
+40          0.426       8.526     0.412
+41          0.483       8.738     0.414
+42          0.466       8.789     0.411
+43          0.462       8.775     0.413
+44          0.461       8.729     0.420
+45          0.462       8.730     0.414
+46          0.464       8.746     0.415
+47          0.463       8.704     0.414
+48          0.460       8.716     0.417
+49          0.454       8.645     0.413
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test/loss         │    0.44111454486846924    │
+│     test/loss_BEE:LU      │    0.48158103227615356    │
+│     test/loss_CRO:LU      │    0.3703787624835968     │
+│     test/loss_EWB:LU      │    0.44748714566230774    │
+│     test/loss_HCH:LU      │    0.3041278123855591     │
+│     test/loss_HZL:LU      │    0.41967207193374634    │
+│     test/loss_LAR:NE      │    0.3283473551273346     │
+│     test/loss_LLL:LU      │    0.5371778011322021     │
+│     test/loss_SLL:LU      │    0.6360010504722595     │
+│     test/loss_SPR:NE      │    0.4507293701171875     │
+│         test/mae          │     6.97069787979126      │
+│      test/mae_BEE:LU      │     5.949345111846924     │
+│      test/mae_CRO:LU      │     6.846951007843018     │
+│      test/mae_EWB:LU      │    7.2271623611450195     │
+│      test/mae_HCH:LU      │     5.96436882019043      │
+│      test/mae_HZL:LU      │     8.090275764465332     │
+│      test/mae_LAR:NE      │     7.009464740753174     │
+│      test/mae_LLL:LU      │     6.819523334503174     │
+│      test/mae_SLL:LU      │     6.898684501647949     │
+│      test/mae_SPR:NE      │     7.930506229400635     │
+│          test/r2          │    0.5022793412208557     │
+│      test/r2_BEE:LU       │    0.40807807445526123    │
+│      test/r2_CRO:LU       │    0.6244087219238281     │
+│      test/r2_EWB:LU       │    0.5645567774772644     │
+│      test/r2_HCH:LU       │    0.5385379791259766     │
+│      test/r2_HZL:LU       │    0.3940057158470154     │
+│      test/r2_LAR:NE       │    0.5553897619247437     │
+│      test/r2_LLL:LU       │    0.4822031855583191     │
+│      test/r2_SLL:LU       │    0.4267920255661011     │
+│      test/r2_SPR:NE       │    0.5265416502952576     │
+│         test/rmse         │     9.092142105102539     │
+│     test/rmse_BEE:LU      │     7.635530471801758     │
+│     test/rmse_CRO:LU      │     8.848578453063965     │
+│     test/rmse_EWB:LU      │     9.398130416870117     │
+│     test/rmse_HCH:LU      │     7.936788558959961     │
+│     test/rmse_HZL:LU      │     10.59094524383545     │
+│     test/rmse_LAR:NE      │     9.359906196594238     │
+│     test/rmse_LLL:LU      │     8.763586044311523     │
+│     test/rmse_SLL:LU      │     9.126177787780762     │
+│     test/rmse_SPR:NE      │    10.169632911682129     │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83/83 0:00:04 • 0:00:00 17.91it/s  
+                                        n   rmse   mae    r2
+Small_leaved_lime:leaf_unfolding      920   9.13  6.90  0.43
+Horse_chestnut:leaf_unfolding         983   7.94  5.96  0.54
+Large_leaved_lime:leaf_unfolding      992   8.76  6.82  0.48
+Common_rowan:leaf_unfolding          1112   8.85  6.85  0.62
+European_white_birch:leaf_unfolding  1161   9.40  7.23  0.56
+European_beech:leaf_unfolding        1134   7.64  5.95  0.41
+Hazel:leaf_unfolding                 1165  10.59  8.09  0.39
+European_larch:needle_emergence      1239   9.36  7.01  0.56
+Common_spruce:needle_emergence       1144  10.17  7.93  0.53
+
+Macro-average across phenophases (equal weight):
+rmse    9.09
+mae     6.97
+r2      0.50
+dtype: float64
+
+Sample-weighted RMSE across all observations: 9.17 days
+(.venv) PS C:\Users\bkowa\Documents\code\AI-Course\PhenoFormer> 

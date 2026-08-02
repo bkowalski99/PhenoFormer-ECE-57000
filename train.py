@@ -236,21 +236,31 @@ class LitModel(pl.LightningModule):
     def on_test_epoch_start(self):
         self.meter_reset()
 
-    def on_test_epoch_start(self):
-        self.meter_reset()
-
     def configure_optimizers(self):
         # self.hparams available because we called self.save_hyperparameters()
         if self.args.optim == "adam":
-            return torch.optim.Adam(
+            opt = torch.optim.Adam(
                 self.parameters(), lr=self.args.learning_rate, weight_decay=self.args.wd
             )
         elif self.args.optim == "adamw":
-            return torch.optim.AdamW(
+            opt = torch.optim.AdamW(
                 self.parameters(), lr=self.args.learning_rate, weight_decay=self.args.wd
             )
         else:
-            raise "Unkown optimizer"
+            raise ValueError(f"Unknown optimizer: {self.args.optim}")
+
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            opt, mode="min", factor=0.5, patience=4
+        )
+        return {
+            "optimizer": opt,
+            "lr_scheduler": {
+                "scheduler": scheduler,
+                "monitor": "val/rmse",   # must match in the code as "val/rmse"
+                "interval": "epoch",
+                "frequency": 1,
+            },
+        }
 
 
 def get_parser():
@@ -420,7 +430,7 @@ if __name__ == "__main__":
     wandb_logger = WandbLogger(name=name, save_dir=args.save_dir, offline=True)
     logger = CSVLogger(save_dir=args.save_dir, name=name)
 
-    monitor_metric = "val/rmse"
+    monitor_metric = "val/loss"
     monitor_mode = "min"
     early_stop = EarlyStopping(monitor=monitor_metric, mode=monitor_mode, patience=30)
     ckpt = ModelCheckpoint(

@@ -1,0 +1,418 @@
+---
+format:
+  html:
+    code-fold: true
+jupyter: python3
+title: '**Cell 1: Setup and Tokenizer Plan**'
+---
+
+
+
+For my implementation I set up 3 tokenizer options: character level, word level, and a BPE method as explicitly required. I then load in the data and clean it up, while also setting up our 3 tokenizers using the normalized dataset. I created a set of helper methods to implement the 3 tokenizers, along with a helper method for normalizing data for any test strings. I also created helper classes to make it easier to store the tokenizer information and the dataset information to improve code quality and make defining the training function easier. I based my normalization method from the examples given in the slides, then added a feature to ensure it could self correct for any errors created during updates.
+Making helper classes makes it so I can standardize some functions to call my splitter functions in an easier format and make it easier to generate the encoded values. I chose character level and word level as my 2 extra tokenizers as I want to see how they compare to BPE. Nominally, predicting the next letter in shakespeare would prove to be difficult as there are many compound words and short forms that would make it difficult, additionally for learning word based prediction, attention will be critical to prevent the machine from ending up in a loop of words.
+For training, I plan to use CrossEntropyLoss and use the dataset class I prepared to load in my sets of words through the torch DataLoader. This way I can utilize some additional functions of the Torch DataLoader to further improve training. For the optimizer I will use AdamW to allow the learning rate to adapt during training, this will reduce the chance of overfitting my model somewhat while allowing me to not need to test multiple learning rates against a model that takes a considerable amount of time to train.
+
+
+```{python}
+# Cell 2: Data, Tokenizers, and Training Functions
+import os
+from random import random
+import re
+import time
+import requests
+from tokenizers import Tokenizer
+from tokenizers.models import BPE
+from tokenizers.trainers import BpeTrainer
+from tokenizers.pre_tokenizers import Whitespace
+from torch.utils.data import Dataset, DataLoader
+import torch
+
+# global vars
+seed = 421999
+tokenizer_selection = 2
+context_length = 128
+batch_size = 64
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+folder  = "external_assignment"
+bpe_path = "bpe_tokenizer.json"
+retrain_flag = True
+
+# define helper classes
+class KowalskiTokenizer:
+    def __init__(self,text,splitter):
+        
+        self.splitter = splitter
+        vocab = sorted(set(self.splitter(text)))
+        if "<UNK>" not in vocab:
+            vocab = ["<UNK>"] + vocab
+        self.vocab = vocab
+        
+        self.stoi = {tok: i for i, tok in enumerate(vocab)}
+        self.itos = {i: tok for i, tok in enumerate(vocab)}
+        self.unk_id = self.stoi["<UNK>"]
+        
+    def encode(self,text):
+        return [self.stoi.get(tok, self.unk_id) for tok in self.splitter(text)]
+    def decode(self, ids, joiner=""):
+        return joiner.join(self.itos[i] for i in ids)
+    def vocab_size(self):
+        return len(self.vocab)
+
+class kowalskiDataset(Dataset):
+    def __init__(self, data, context_length):
+        self.data = data
+        self.context_length = context_length
+
+    def __len__(self):
+        return len(self.data) - self.context_length - 1
+
+    def __getitem__(self, idx):
+        x = self.data[idx : idx + self.context_length]
+        y = self.data[idx + 1 : idx + self.context_length + 1]
+        return x, y
+    
+# define helper methods
+def char_level_tokenizer(text):
+    tokens = list(text)
+    return tokens
+
+def word_level_tokenizer(text):
+    tokens = text.split()
+    return tokens
+
+def bpe_tokenizer(text, vocab_size=5000, path = bpe_path, folder = folder): 
+    if os.path.exists(folder + "/" + str(vocab_size) + "_" + path):
+        tokenizer = Tokenizer.from_file(folder + "/" + str(vocab_size) + "_" + path)
+    else:
+        print("BPE Tokenizing")
+        tokenizer = Tokenizer(BPE(unk_token="<UNK>"))
+        tokenizer.pre_tokenizer = Whitespace()
+        trainer = BpeTrainer(vocab_size=vocab_size, special_tokens=["<UNK>"])
+        tokenizer.train_from_iterator([text], trainer)
+        tokenizer.save(folder + "/" + str(vocab_size) + "_" + path)
+    return tokenizer
+
+def normalize_text(text):
+    text = re.sub(r"([.!?])", r" \1", text) #include space
+    text = re.sub(r"[^a-zA-Z0-9\s.!?]+", r" ", text) # remove unwanted characters
+    text = re.sub(r"\s+", " ", text) #normalize multiple spaces to single space
+    return text
+
+def set_seed(seed):
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+# load data
+link = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+
+response = requests.get(link)
+text = response.text
+
+# set random seed
+set_seed(seed)
+
+#normalize text
+
+text = normalize_text(text)
+
+example_str = "To be, or not to be, that is the question."
+example_str = normalize_text(example_str)
+tokenizers = ["Character-level", "Word-level", "BPE"]
+char_tok = KowalskiTokenizer(text=text, splitter=char_level_tokenizer)
+word_tok = KowalskiTokenizer(text=text, splitter=word_level_tokenizer)
+bpe_tok = bpe_tokenizer(text)
+
+tokenizers = {
+    "Character-level": char_tok,
+    "Word-level": word_tok,
+    "BPE": bpe_tok,
+}
+for name,tok in tokenizers.items():
+    if name == "BPE":
+        vsize = tok.get_vocab_size()
+        ids = tok.encode(example_str).ids
+        decoded = [tok.decode([i]) for i in ids]
+    else:
+        vsize = tok.vocab_size()
+        ids = tok.encode(example_str)
+        decoded = [tok.decode([i]) for i in ids]
+    print(name, "vocab size:", vsize)
+    print(name, "ids:", ids)
+    print(name, "decoded tokens:", decoded)
+
+# Select tokenizer, create datasets
+tokenizer = tokenizers["BPE"]
+data = torch.tensor(tokenizer.encode(text).ids, dtype=torch.long)
+split = int(0.9 * len(data))
+train_data, val_data = data[:split], data[split:]
+
+train_dataset = kowalskiDataset(train_data, context_length)
+val_dataset = kowalskiDataset(val_data, context_length)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+
+# Define training and evaluation functions
+def train_model(model, optimizer, train_loader=train_loader, lossFN=torch.nn.CrossEntropyLoss(), device=device, epochs=2, print_every=None):
+    total_steps = epochs * len(train_loader)
+    print_every = print_every or max(1, total_steps // 100)
+    model.train()
+    losses = []
+    step = 0
+    start_time = time.time()
+    for epoch in range(epochs):
+        for xb, yb in train_loader:
+            xb, yb = xb.to(device), yb.to(device)
+            logits = model(xb)
+            loss = lossFN(logits.view(-1, logits.size(-1)), yb.view(-1))
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            losses.append(loss.item())
+            if step % print_every == 0:
+                elapsed = time.time() - start_time
+                rate = (step + 1) / elapsed if elapsed > 0 else 0
+                print(f"step {step}/{total_steps}  loss {loss.item():.4f}  "
+                      f"elapsed {elapsed/60:.1f}min  ({rate:.2f} steps/s)")
+            step += 1
+    total_time = time.time() - start_time
+    print(f"Training completed in {total_time/60:.2f} minutes")
+    return losses
+    
+
+def evaluate_model(model, val_loader=val_loader, lossFN=torch.nn.CrossEntropyLoss(), device=device):
+    with torch.no_grad():
+        model.eval()
+        losses = []
+        for xb, yb in val_loader:
+            xb, yb = xb.to(device), yb.to(device)
+            logits = model(xb)
+            loss = lossFN(logits.view(-1, logits.size(-1)), yb.view(-1))
+            losses.append(loss.item())
+        model.train()
+    print(f"Validation loss: {sum(losses) / len(losses):.4f}")
+    return sum(losses) / len(losses)
+  
+```
+
+```{python}
+# Cell 3: Positional Encoding (From Scratch)
+
+def PositionalEncoding(d_model, max_seq_len=512):
+    pe = torch.zeros(max_seq_len, d_model)
+    position = torch.arange(0, max_seq_len, dtype=torch.float32).unsqueeze(1)
+    divisor = 10000 ** (torch.arange(0, d_model, 2, dtype=torch.float32) / d_model)
+    pe[:, 0::2] = torch.sin(position / divisor)
+    pe[:, 1::2] = torch.cos(position / divisor)
+    
+    return pe.unsqueeze(0)
+
+pe = PositionalEncoding(64, 256)
+print(pe[0, 5, 10])
+print(pe[0, 5, 11])
+print(pe[0, 100, 20])
+print(pe[0, 100, 21])
+```
+
+```{python}
+# Cell 4: Transformer Building Blocks (From Scratch)
+
+class MLP_network(torch.nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim, dropout_prob=0.5):
+        assert input_dim == output_dim, "Input dimension must match output dimension"
+        super().__init__()
+        self.input_dim = input_dim
+        self.hidden_dim = hidden_dim
+        self.output_dim = output_dim
+
+        self.layer1 = torch.nn.Linear(input_dim, hidden_dim)
+        self.activation = torch.nn.ReLU()
+        self.dropout1 = torch.nn.Dropout(p=dropout_prob)
+        self.layer2 = torch.nn.Linear(hidden_dim, output_dim)
+        self.dropout2 = torch.nn.Dropout(p=dropout_prob)
+
+        self.layer_norm = torch.nn.LayerNorm(output_dim)
+    
+
+    def forward(self, x):
+       residual = x
+       out = self.layer1(x)
+       out = self.activation(out)
+       out = self.dropout1(out)
+       out = self.layer2(out)
+       out = self.dropout2(out)
+       out = self.layer_norm(out + residual)
+       return out
+
+class MultiHeadAttention(torch.nn.Module):
+    def __init__(self, d_model, num_heads):
+        assert d_model % num_heads == 0, "d_model must be divisible by num_heads"
+        super().__init__()
+       
+        self.Q = torch.nn.Linear(d_model, d_model)
+        self.K = torch.nn.Linear(d_model, d_model)
+        self.V = torch.nn.Linear(d_model, d_model)
+        self.h = num_heads
+        self.d_k = d_model // num_heads
+        self.out = torch.nn.Linear(d_model, d_model)
+        self.layer_norm = torch.nn.LayerNorm(d_model)
+
+    def forward(self, x):
+        seq_len = x.size(1)
+        causal_mask = torch.triu(
+            torch.ones(seq_len, seq_len, device=x.device, dtype=torch.bool), diagonal=1
+        )
+
+        Q = self.Q(x)
+        K = self.K(x)
+        V = self.V(x)
+        for head in range(self.h):
+            Q_head = Q[:, :, head * self.d_k:(head + 1) * self.d_k]
+            K_head = K[:, :, head * self.d_k:(head + 1) * self.d_k]
+            V_head = V[:, :, head * self.d_k:(head + 1) * self.d_k]
+            
+            raw_attention_scores = torch.matmul(Q_head, K_head.transpose(-2, -1)) / torch.sqrt(torch.tensor(self.d_k, dtype=torch.float32))
+            raw_attention_scores = raw_attention_scores.masked_fill(causal_mask, float("-inf")) #prevent attending to future positions
+            
+            attn_weights = torch.nn.functional.softmax(raw_attention_scores, dim=-1)
+            if head == 0:
+                out = torch.matmul(attn_weights, V_head)
+            else:
+                out = torch.cat([out, torch.matmul(attn_weights, V_head)], dim=-1)
+        out = self.layer_norm(self.out(out) + x)
+        return out
+
+```
+
+```{python}
+# Cell 5: Transformer Implementation and Training
+class Transformer(torch.nn.Module):
+    def __init__(self, vocab_size, d_model, n_layers, n_heads, context_len, dropout_prob=0.2):
+        assert d_model % n_heads == 0, "d_model must be divisible by n_heads"
+        super().__init__()
+        
+        pe = PositionalEncoding(d_model, max_seq_len=context_len)   # shape [1, context_len, d_model]
+        self.register_buffer("pe", pe)
+        self.embedding = torch.nn.Embedding(vocab_size, d_model)
+        self.MMA = torch.nn.ModuleList([MultiHeadAttention(d_model, n_heads) for _ in range(n_layers)])
+        self.layer_norm = torch.nn.LayerNorm(d_model)
+        self.ff = torch.nn.ModuleList([MLP_network(d_model, d_model * 4, d_model, dropout_prob) for _ in range(n_layers)])
+        self.output_layer = torch.nn.Linear(d_model, vocab_size)
+
+    def forward(self, x):
+        seq_len = x.size(1)
+        out = self.embedding(x) + self.pe[:, :seq_len, :]
+        for i, layer in enumerate(self.MMA):
+            out = layer(out)
+            out = self.ff[i](out)
+        out = self.layer_norm(out)
+        out = self.output_layer(out)
+        
+        return out
+
+
+checkpoint_dir = folder +"/checkpoints"
+os.makedirs(checkpoint_dir, exist_ok=True)
+checkpoint_path = os.path.join(checkpoint_dir, "transformer_weights.pt")
+
+def save_checkpoint(model, path=checkpoint_path):
+    torch.save(model.state_dict(), path)
+    print(f"Saved weights to {path}")
+
+def load_checkpoint(model, path=checkpoint_path, device=device):
+    model.load_state_dict(torch.load(path, map_location=device))
+    model.to(device)
+    print(f"Loaded weights from {path}")
+    return model
+
+transformer_model = Transformer(vocab_size=tokenizer.get_vocab_size(), d_model=256, n_layers=4, n_heads=8, context_len=128, dropout_prob=0.4)
+optimizer = torch.optim.AdamW(transformer_model.parameters(), lr=1e-4)
+transformer_model.to(device)
+if os.path.exists(checkpoint_path) and not retrain_flag:
+    load_checkpoint(transformer_model)
+else:
+    train_model(transformer_model, optimizer, epochs=2, print_every=300)
+    save_checkpoint(transformer_model)
+evaluate_model(transformer_model)
+```
+
+### **Cell 6: Generation and Sampling Plan**
+To test our model we'll use a line from the Tempest to see how it reacts to "We are such things as dreams and we round our lives with a sleep".
+
+For the parameter plan we'll create a temperature, top-k, and top-p based model. I'll try T=0.2,0.5,1.0 for temperature, for Top-k I'll try k=5,20,50, and for top-p I'll try p=0.5, and p=0.9.
+I expect as I increase temperature the model will make less contextual sense, as I raise k the model will become more creative, and as p increases the model will tend to select more varied outputs. We will see this creativity from the models from how much they resemble existing text. I believe that the more creative models will tend to "lose the plot" so to speak and not hold a coherent thought over time.
+
+```{python}
+# Cell 7: Generation and Sampling Implementation
+
+def sample_temperature(logits, temperature=1.0):
+    logits = logits / temperature
+    probs = torch.nn.functional.softmax(logits, dim=-1)
+    return torch.multinomial(probs, 1).item()
+
+def sample_top_k(logits, k=10):
+    top_k_logits, top_k_indices = torch.topk(logits, k)
+    probs = torch.nn.functional.softmax(top_k_logits, dim=-1)
+    return top_k_indices[torch.multinomial(probs, 1)].item()
+
+def sample_top_p(logits, p=0.9):
+    sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+    cumulative_probs = torch.cumsum(torch.nn.functional.softmax(sorted_logits, dim=-1), dim=-1)
+    sorted_indices_to_remove = cumulative_probs > p
+    sorted_indices_to_remove[1:] = sorted_indices_to_remove[:-1].clone()
+    sorted_indices_to_remove[0] = False
+    sorted_logits[sorted_indices_to_remove] = -float("Inf")
+    probs = torch.nn.functional.softmax(sorted_logits, dim=-1)
+    return sorted_indices[torch.multinomial(probs, 1)].item()
+
+
+def generate(model, tokenizer, context_string, method="temperature", max_new_tokens=100,
+             context_length=context_length, device=device, **kwargs):
+    ids = tokenizer.encode(context_string).ids
+    context_data = torch.tensor(ids, dtype=torch.long, device=device)
+
+    model.eval()
+    for _ in range(max_new_tokens):
+        window = context_data[-context_length:].unsqueeze(0)   # stay within the trained context window
+        with torch.no_grad():
+            logits = model(window)
+        next_logits = logits[0, -1, :]
+
+        if method == "temperature":
+            next_id = sample_temperature(next_logits, **kwargs)
+        elif method == "top_k":
+            next_id = sample_top_k(next_logits, **kwargs)
+        elif method == "top_p":
+            next_id = sample_top_p(next_logits, **kwargs)
+        else:
+            raise ValueError(f"Unknown method: {method}")
+
+        next_id_tensor = torch.tensor([next_id], dtype=torch.long, device=device)
+        context_data = torch.cat([context_data, next_id_tensor])   # feed the new token back in
+
+    model.train()
+    return tokenizer.decode(context_data.tolist())   # context + new tokens together
+
+
+context_string = "We are such things as dreams are made on, and our little life is rounded with  "
+context_string = normalize_text(context_string)
+print("\nContext String:\t", context_string)
+
+print("\nTemperature Sampling:\n")
+print("temperature=0.2:\t", generate(transformer_model, tokenizer, context_string, method="temperature", temperature=0.2))
+print("temperature=0.5:\t", generate(transformer_model, tokenizer, context_string, method="temperature", temperature=0.5))
+print("temperature=1.0:\t", generate(transformer_model, tokenizer, context_string, method="temperature", temperature=1.0))
+print("\nTop-k Sampling:\n")
+print("top_k=5:\t", generate(transformer_model, tokenizer, context_string, method="top_k", k=5))
+print("top_k=20:\t", generate(transformer_model, tokenizer, context_string, method="top_k", k=20))
+print("top_k=50:\t", generate(transformer_model, tokenizer, context_string, method="top_k", k=50))
+print("\nTop-p Sampling:\n")
+print("top_p=0.5:\t", generate(transformer_model, tokenizer, context_string, method="top_p", p=0.5))
+print("top_p=0.9:\t", generate(transformer_model, tokenizer, context_string, method="top_p", p=0.9))
+```
+
+### **Cell 8: Analysis and Discussion**
+I decided to use the BPE tokenizer for my final model. This model had the best output as it had a smaller total vocabulary size than the word-level tokenizer while also offering a set of tokens that were more likely to match the context I would expect my words to be used in. When generating outputs with these tokenizers I found the BPE to show the most real feeling results and those are what I have stored above. During my first round of training the model completed training with the training loss reaching 1.2 and the validation loss reaching 8.4. This indicated a case of overfitting so I changed the number of layers from 6 to 4 and increased the dropout rate from 0.2 to 0.4. This was intended to reduce the  overfitting by reducing the amount of parameters in the model and by increasing the dropouts to prevent that overtraining. This worked, bringing out training loss up to 2.5, but bringing the validation loss down to 7.5, giving a healthier gap from the expected random guess loss of 8.52.
+When reviewing the generated outputs I noticed that the low temperature responses were likely to sound more like actual shakespeare and would frequently use the same words and tended to put characters in scenes together if they had a scene together from the input. The high temperature responses were far less likely to have a coherent sentence within them. Additionally the k results matched my hypothesis, as we increased k the model become more creative and also tended to lose the plot, as shown later in the model when it generates "Clown I hope to himself. Clown come come". Finally for the top_p increase this followed my hypothesis as well. The p=0.5 response has sections that sound like normal dialogue, while the p=0.9 response has sections that sound like a random selection of words. Specifically, in the lower p example, there is a section that follows the pattern for a reasonable dialogue exchange between 3 separate characters.
+In these more "random" examples, the model specifically was more likely to pick contractions or change to named characters. In the less "random" examples, it was more likely for the model to continue with similar ideas and follow the existing structure of the sentence, or switching to other characters who would be more likely to pick up the dialogue when one character stopped speaking. For instance in the low temperature example we get an exchange between the Duke of York and Duchess of York. The characters sharing scenes together must have increased the likelyhood that one would appear when looking for a next token that would logically follow in the scene.
+

@@ -1,0 +1,50 @@
+---
+format:
+  revealjs:
+    theme: dark
+    transition: slide
+    scrollable: true
+    width: 1280
+    height: 800
+    
+---
+
+## ECE 57000 - Tiny Reproductions Proposal
+- In the 2025 Paper, "Deep learning meets tree phenology modelling" Garnot et al. presents a deep learning model known as PhenoFormer that predicts leaf emergence and coloration by using a Swiss data set containing 70 years' worth of values.
+- This semester I intend to reproduce their Spring result (8.5 days RMSE) by recreating, training, and evaluating the model. To fit a single-semester scope, I will scale the reproduction down: training on a subset of representative species and sites and a simpler transformer should I lack computing resources. My minimum-viable target is to beat the Null model (13.6 days RMSE) and the stretch target is to match the paper within 10%.
+- This matters because phenology is a measurable leading indicator of climate disruption and small shifts in these cycles cascade through the ecosystem. These shifts desynchronize the interactions that sustain it and threaten endangered species. A reliable, reproducible predictor is a step toward anticipating and mitigating those shifts.
+
+## Paper 1 - Deep learning meets tree phenology modelling: PhenoFormer versus process-based models
+- Garnot et al. define Phenology as "the study of the cyclic phenomena occurring in plant and animal life" and present the PhenoFormer model that I will be intending to reproduce within a 10% RMSE.
+- They go on to explain that because climate change impacts the phenology of the ecosystem, this leads to desynchronization of ecological interactions resulting in significant ecological problems.
+- The model itself focuses on predicting leaf-unfolding in the Spring and senescence in the Fall, as these typically indicate core steps in trees' seasonal cycles and are most-likely to be impacted by climate change.
+- The dataset used comes from the Swiss Federal Office of Meteorology and Climatology, MeteoSwiss. This dataset contains a phenological time series that has been collected since 1951 and covers 175 observations sites, with specific tracking for the leaf unfolding and leaf coloration.
+- For Spring data, they found that by using attention based deep learning algorithms they were able to predict with 8.5 days RMSE, which was a large improvement over the 13.6 days RMSE of the Null model.
+- For Autumn data, they managed 12.6 days RMSE, which was a smaller improvement over the 13.9 days offered by the Null Model.
+- The paper referenced above can be found [here](https://arxiv.org/html/2410.23327v1#bib.bib16)
+- The data for this set is publicly available on zenodo [here](https://zenodo.org/records/15045780)
+
+## Paper 2 - Phenology
+- To familiarize myself with the impact and importance of phenology I read through Phenology by Macphie & Phillimore [here](https://doi.org/10.1016/j.cub.2024.01.007)
+- It's important to consider the widespread implications that small changes can have on the ecosystem. If the calculated periods for the bloom and decay of trees (our primary producers) begin to shorten, it means less coverage time for fungi and small rodents during the warmer months, impacting the food chain further by reducing hunting seasons and reducing total population, eventually leading to partial collapse.
+- We see that temperature is the primary phenological cue for many environments influencing primary producers towards blooms (both in plant-life and in bacterial-life). Other indicators such as rainfall can have similar reactions for primary producers.
+- These phenological cues act as indicators for the visible effects of climate change. We can already track and see wide phenological shifts over the previous four decades that have adjusted the timing of our ecosystems. We see evidence of these changes across wide taxonomic groups like fungi, fish, and birds all adjusting their spawning and migration patterns due to the effects of climate change. 
+- Along with phenology, we may consider the optimum timing of these events. There are dates at which it would best serve the ecosystem for these events to begin and end. We are seeing some plants adapting to the changes in the environment and meeting these optimum windows by adjusting their tolerance to these aspects of phenology, offering them a favorable condition to pass on their genes.
+- This directly motivates Paper 1's PhenoFormer: its purpose is to project how these optimum windows shift under climate change, so the prediction accuracy I aim to reproduce is precisely what determines whether such ecological projections are trustworthy enough to act on.
+
+## Paper 3 - Machine learning modeling of plant phenology...
+- This paper is referenced in our first paper as an example of utilizing ML based techniques to predict the phenology during a time period.
+- In this paper, Czernecki et al. utilize a machine learning based approach to provide phenology predictions to partially reconstruct the missing data from a Polish phenological institute that was not funded between 1993 and 2005.
+- 3 inputs were utilized to create the prediction algorithm: preprocessed gridded meteorological data, satellite-derived products, and spatial features of the monitoring sites. This gives a robust group of predictors as there are many factors that go into the phenological phenomena that we are predicting.
+- This study used 6 different statistical modelling methods to evaluate the onset dates of the selected phenophases, but we will focus only on the generalized boosted models (GBM) and the random forest (RF) implementations as those comparisons appear in our core paper.
+- The study found that GBM implementations yielded results accurate to 6.4 days RMSE, and were ultimately brought to this accuracy level by layering other metrics into the fold like using MODIS vegetation metrics and preprocessing with a Boruta algorithm to deliver better starting variables.
+- It is important to note that while it appears this paper predicts a dataset with higher accuracy than our first paper, that is because this dataset is separate from PhenoFormer. PhenoFormer tested this algorithm on their MeteoSwiss dataset for their comparison.
+- This paper is available [here](https://link.springer.com/article/10.1007/s00484-018-1534-2).
+
+## Evaluation Metrics
+- To create a quantifiable and computable metric, I intend to reproduce the reported Spring results (8.5 days RMSE) from the Deep Learning meets Phenology paper and plan to use a percent error margin to contextualize progress as follows:
+	- Excellent: Calculated RMSE from user created model is within 1 day RMSE (~10% MoE) from the model of the paper.
+	- Good: Calculated RMSE from user created model is within a 2 day RMSE (~20% MoE) from the model of the paper.
+	- Okay: Calculated RMSE from user created model is within a 4 day RMSE (50% MoE) from the model of the paper.
+	- Poor: Calculated RMSE from user created model is more than a 4 day RMSE (50% MoE) from the model of the paper.
+- By establishing the model itself, recreating the same structure shown in the model, and meeting the Spring results I should be able to replicate a section of this paper's thesis. The metrics above intend to scale from an excellent implementation being as accurate as the paper, and a poor implementation failing to reach the accuracy of the Null model (13.6 days RMSE).

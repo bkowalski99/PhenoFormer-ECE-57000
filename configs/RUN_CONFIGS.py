@@ -1,5 +1,7 @@
 from pathlib import Path
 
+GPU_ENABLED = False
+
 training_configs = dict(
     default=dict(
         loss="L2",
@@ -8,7 +10,7 @@ training_configs = dict(
         batch_size=16,
         sigma_jitter=0.05,
         max_epochs=300,
-        gpus=1,
+        gpus=GPU_ENABLED,
         nan_value_target=-1000,
     ),
     debug=dict(
@@ -18,7 +20,7 @@ training_configs = dict(
         batch_size=16,
         sigma_jitter=0.05,
         max_epochs=1,
-        gpus=1,
+        gpus=GPU_ENABLED,
         nan_value_target=-1000,
     ),
 )

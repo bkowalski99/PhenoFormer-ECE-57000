@@ -13,8 +13,8 @@ You need to specify the path of the dataset folder, and the path of where you
 would like the output to be written. 
 """
 
-data_folder = "path/to/data"
-save_dir = "path/to/outputdir"
+data_folder = "data/PhenoFormer-data/learning-models-data"
+save_dir = "kowalski-results-existing-methods"
 
 model_config = "phenoformer_default"
 training_config = "default"

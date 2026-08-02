@@ -267,7 +267,9 @@ class ClimatePhenoDataset(Dataset):
 ## utils
 def tensorify_dict(obj):
     if not isinstance(obj, dict):
-        return torch.tensor(obj).float()
+        if isinstance(obj, (pd.Series, pd.DataFrame, pd.Index)):
+            obj = obj.to_numpy()
+        return torch.tensor(np.asarray(obj)).float()
     else:
         return {k: tensorify_dict(v) for k, v in obj.items()}
 

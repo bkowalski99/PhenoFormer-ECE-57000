@@ -1,0 +1,963 @@
+args: !!python/object:argparse.Namespace
+  learning_rate: 0.001
+  loss: L2
+  nan_value_target: -1000
+  optim: adam
+  wd: 0
+backbone: !!python/object:model.architecture.PhenoFormer
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - - - positional_encoding
+      - !!python/object:model.architecture.PositionalEncoder
+        T: 1000
+        _backward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _buffers: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _is_full_backward_hook: null
+        _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _modules: !!python/object/apply:collections.OrderedDict
+        - []
+        _non_persistent_buffers_set: !!set {}
+        _parameters: !!python/object/apply:collections.OrderedDict
+        - []
+        _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        d: 16
+        denom: !!python/object/apply:torch._utils._rebuild_tensor_v2
+        - !!python/object/apply:torch.storage._load_from_bytes
+          - !!binary |
+            gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+            AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+            aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+            Z2UKcQFYDQAAADI2ODk5MjYzNDk1ODRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+            OTI2MzQ5NTg0cQFhLhAAAAAAAAAAAACAPwAAgD+WxBdAlsQXQADzs0AA87NACl1VQQpdVUFy+/xB
+            cvv8QZX6lUKV+pVC9NMxQ/TTMUMn2dJDJ9nSQw==
+        - 0
+        - !!python/tuple
+          - 16
+        - !!python/tuple
+          - 1
+        - false
+        - !!python/object/apply:collections.OrderedDict
+          - []
+        repeat: null
+        training: true
+        updated_location: false
+    - - shared_linear_encoder
+      - !!python/object:torch.nn.modules.container.Sequential
+        _backward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _buffers: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _is_full_backward_hook: null
+        _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _modules: !!python/object/apply:collections.OrderedDict
+        - - - '0'
+            - !!python/object:torch.nn.modules.linear.Linear
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTE4MjRxAlgDAAAAY3B1cQNLgE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUxODI0cQFhLoAAAAAAAAAAZpulvuBgmj20i5q9FC31PY6jgL5fviO+v1qtvmcEsr5kUd89
+                          +rEQvlICQj6AbDI8fmRhPsaGHD40MDW+6t9cPkDeEb2YTfK9w1KZPs3moj4Ur9o9xMtCvqCp6DzV
+                          XGe+upY5Pj5FKD6d32e+qkqavvBtOb1WzXq+ficKvmHltD6QRXe9/yaiPrj0ur20rJ6+vmIwPkS9
+                          DD7WjzQ+7Einvgvhpj7wZQK9il86Ps9DhT58RUq+3GEqvlLZ5L1bDGe+ygtNPtiNYT1s3ZI9fcWS
+                          vkCQ0jy/raE+gJebPddgJL5xRJo+0zOFPiaNQz4QuPs8mmAGvsPol74T+ZW+kIWPvDUvkb40T4I9
+                          tfuGvio8MD4Ffju+oOhpPbKBFz4AmPa6oJiDPCNugD4ewnM+g3pxvtZqmr6Kf+y9Q3imPqcKq754
+                          6Cu9PXkIvul6sj7C8G4+M9WaPu/dpz7tQqG+xmNePicDnz5Rzpi+2pgOPix5iD00zaK+Ta43vvB5
+                          5LzAEhm8OmhTPhSfi71XeaY+e6mKPtYkRr5DV5E+DnSmvgAakDrw2i29uGhTvczBpj1YaHC+MRCE
+                          PqIpLj41MKo+wIZ5POYZOj4lfIS+7K6XvlE4pj4C7uu9WjV2vhMcTL65dmC+X+SoPtMMpD6S5bK+
+                          wMhYPPaCND4CzUA+QDosPPbYiL4=
+                      - 0
+                      - !!python/tuple
+                        - 16
+                        - 8
+                      - !!python/tuple
+                        - 8
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTM1MDRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUzNTA0cQFhLhAAAAAAAAAAEJ3zvJZbKz6sDdc9uplvPuBDa7wgELK9ONFgPVTVsD07QFy+
+                          7YOmPoAwGDyCuHg+vYWnvsA1uD3srYw99Ou2vQ==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              in_features: 8
+              out_features: 16
+              training: true
+        _non_persistent_buffers_set: !!set {}
+        _parameters: !!python/object/apply:collections.OrderedDict
+        - []
+        _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        training: true
+    - - learnt_tokens
+      - !!python/object:torch.nn.modules.container.ParameterDict
+        _backward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _buffers: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _initialized: true
+        _is_full_backward_hook: null
+        _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _modules: !!python/object/apply:collections.OrderedDict
+        - []
+        _non_persistent_buffers_set: !!set {}
+        _parameters: !!python/object/apply:collections.OrderedDict
+        - - - Small_leaved_lime:leaf_unfolding
+            - !!python/object/apply:torch._utils._rebuild_parameter
+              - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                - !!python/object/apply:torch.storage._load_from_bytes
+                  - !!binary |
+                    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                    Z2UKcQFYDQAAADI2ODk5MjYzNTM4MjRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                    OTI2MzUzODI0cQFhLhAAAAAAAAAAQA+3PCxiez/abHE/aTkyP3zIlD7J0Hc/mn3VPgDmBz1QssQ9
+                    jgPhPii14j7gy/M9wshLPzdEJD+8gTw+Fs2ZPg==
+                - 0
+                - !!python/tuple
+                  - 1
+                  - 16
+                - !!python/tuple
+                  - 16
+                  - 1
+                - false
+                - !!python/object/apply:collections.OrderedDict
+                  - []
+              - true
+              - !!python/object/apply:collections.OrderedDict
+                - []
+        _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        training: true
+    - - transformer
+      - !!python/object:model.transformer_pytorch.TransformerEncoderLayer
+        _backward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _buffers: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _is_full_backward_hook: null
+        _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _modules: !!python/object/apply:collections.OrderedDict
+        - - - self_attn
+            - !!python/object:model.activation_pytorch.MultiheadAttention
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - - - out_proj
+                  - !!python/object:torch.nn.modules.linear.NonDynamicallyQuantizableLinear
+                    _backward_hooks: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _buffers: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _forward_hooks: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _is_full_backward_hook: null
+                    _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _modules: !!python/object/apply:collections.OrderedDict
+                    - []
+                    _non_persistent_buffers_set: !!set {}
+                    _parameters: !!python/object/apply:collections.OrderedDict
+                    - - - weight
+                        - !!python/object/apply:torch._utils._rebuild_parameter
+                          - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                            - !!python/object/apply:torch.storage._load_from_bytes
+                              - !!binary |
+                                gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                                AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                                aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                                Z2UKcQFYDQAAADI2ODk5MjYzNTI0NjRxAlgDAAAAY3B1cQNNAAFOdHEEUS6AAl1xAFgNAAAAMjY4
+                                OTkyNjM1MjQ2NHEBYS4AAQAAAAAAAKBdrj0q2HC+rMq8vSKPL76aJ0O+rMsRPrAq7DxgDfk9oL8u
+                                PPqKaL5A2Cc97mI9vgr+Xj6gjEY8wOJoPYhZYb1eDg2+cDZxPlDjPD1wbPs9DDKLPUAaaD6OKgG+
+                                MFA6PupmZr4Giys+DP+WPbjzK706HUI+LIpTPlzJ4L2AdnG+CmQVvmKSIr7s/no+NPTvPXIhNL7g
+                                vl+8OGCzPXgVAj7spNI9XEVzvpBK3rxgZCg9qCdlPfoDSL5utj4+HCWgvWxuFj4m+ii+EFEivaAt
+                                cDyOSx8+8ICIPIhLoL0Od2u+oM1WPXiStD2Q3fs8vFRHPtIQFb7yVU++yMMrvgD2YjwI7je9VGXN
+                                vVBvbz0Chwy+aqhXPvBpN72u0nY+uM0qPVqxND7ezzE+CrYQPrQuhr1I5jk+spomvgqISb6oM2y9
+                                jH0CvoKqJD5A5a28EkAAPih+4702El++gMXQPTqOID5G3A0+ngtzPhDkZL3mWXw+BIrLPWQ/Gr7U
+                                QGG+GHY6PWrOLj4AoGi4AFkTPEitOz6Ek1e++s88PgCyIbpQQ8i8DGlNviTTHL6UHQI+xA6oPeTu
+                                WL5MWre9uosjvuIoMr6+O30+BPKOvSimED44CT0+gJTsPS5oBr6qKii+3HIYPgAesbtA+AK+Gh84
+                                Pm5Yaz72oBU+yCIUvmy8B744OBc90kkIviT7ar4gqsO8ANC5upC2/T3e3QY+lsJYPnDVRb1g8Eo8
+                                9GBwvvqBDL6MIgI+QPRnvtr5Ij4A/MU6VvAsvtwA7T3wlpS8yPQ3PnDBtD3kyKM9ZO6wPSgVV72m
+                                xiK+im4avuY+fz7gGLe8QKjZvZjL5r2s97M9cPx7PYwKfD7Qads9UCeFPXLtRj6mz1K+gH5ZPuiW
+                                MT1AvUC8gDMxvnhplT20sJc9UFzAPZT60L1wJn4+FBJpvo63dz4Ywiw9zqwuPtr4Rz5IHy2+oH6L
+                                PYIELz6k4sK93EYNPlBobr2QQCM+pFAbvkAX570QVdY8hOdmPtLPIj5gInM84n8nvtAjVT7QU3M9
+                                BGR6PppiOz7GHlS+VJ8gvgjnZr3OCk8+unZevlAIcL2+1Go+ykACPpjOLD2ok7e9HJ52Prhy670S
+                                9Gi+5MCbPejSVD3i+kS+HFKiPU4WGT7qPlS+YHK5vQ6Qar6MShG+VNlOvr51C766MmK+TMbYvX7F
+                                S7746u29LPIRPgjsAr3MHl4+PE5KPnpsOz6kpFq+ALAxvcZIdr5kU/U9oFolvV64ab4gqCk9VA2I
+                                PRTKJj5sC8G9KNJEPtrIJT6ICLI9+B5fvugMhT0QUoK9wCBqPoDgHT3eaT8+EDLnPVSPFj7CRH0+
+                                hJuPvai/Wj1kxsc99j47PlbDOT4=
+                            - 0
+                            - !!python/tuple
+                              - 16
+                              - 16
+                            - !!python/tuple
+                              - 16
+                              - 1
+                            - false
+                            - !!python/object/apply:collections.OrderedDict
+                              - []
+                          - true
+                          - !!python/object/apply:collections.OrderedDict
+                            - []
+                      - - bias
+                        - !!python/object/apply:torch._utils._rebuild_parameter
+                          - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                            - !!python/object/apply:torch.storage._load_from_bytes
+                              - !!binary |
+                                gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                                AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                                aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                                Z2UKcQFYDQAAADI2ODk5MjYzNTE5ODRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                                OTI2MzUxOTg0cQFhLhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+                            - 0
+                            - !!python/tuple
+                              - 16
+                            - !!python/tuple
+                              - 1
+                            - false
+                            - !!python/object/apply:collections.OrderedDict
+                              - []
+                          - true
+                          - !!python/object/apply:collections.OrderedDict
+                            - []
+                    _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+                    - []
+                    in_features: 16
+                    out_features: 16
+                    training: true
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - in_proj_weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTQyMjRxAlgDAAAAY3B1cQNNAANOdHEEUS6AAl1xAFgNAAAAMjY4
+                          OTkyNjM1NDIyNHEBYS4AAwAAAAAAAGBqS7xaBzU+wAMcvKDnk7wwoBo+kAOAPFZE2b2gEug8XqaR
+                          vfgQlT3ytBC+CptUPvDabD0e+Zi+u36avhHgiz5KOD0+3OHgPRTd5j01xJc+SFqOPUzKSL5NKzW+
+                          cHKsPFIEQD6Kbmo+4i5HPqlJZL6+GTa+7OLMvYi4Az0vADK+zgR5vlDbwLwl1De+OBs6PQTLhD1n
+                          /4c+VJ1MvgaRKD6QZzI+sAeSPfgCED2zCI8+UnxavoDzrDt3SIa+ABtSvaw70L2CVHg+aNEXPhJX
+                          XT5Uw7U96qnMvaT+0D28fqM9MM4jPS6YDT4CRRw+CLA/PcAxtjvA0209KMl6PZTKUL6/Ppu+Mt6I
+                          vbBBhL3U/D2+KD/QvetcjT5g/su9CS0nvteANb5Aahe+/GbevfhLf77t0IQ+ztFCvkDG0zzL7ja+
+                          m/hFvuVtnL7+M34+QBC9PTIncD7ZuYi+MO5cvf5Uzr0rboc+MKKHvPAZgz0K0FU+4llLPjQWsb1B
+                          wZG+4XaSPiCDNL2cdCU+ETUuvjyser4AcK47B2iLvnOQO75Kr2y+69JlvsDAoD2QW/090JVDvhKG
+                          Xr4c9RM+T5UfviDa3jz6VJG+hghsvlgyc71py4Y++EalPeh6M72Aq3Q73+livn1shD6S5mK+vwqD
+                          PlOwkb4BNiu+OeuVvviFW74E8W6+2HLhvWjTRT0Oq6y9LI0qPjiIN77I64e+yCGGvjELVL5AFnY8
+                          bFUBPvtwnD78eiM+VrYTPhByaL2E18w9WDCPvpktAr4czIW+gCuoO8/cFb4gwjW9cI70PZCfOz23
+                          a4I+WP12vkjmKb5FyJM+MP4nPa5OSj7TXIM+ztNMPmXdHL7gQ1Y9OLhGvp/qlb7Iuca9Gn8HPloW
+                          XL7vfTi+cKt/vWmdkj7G7Dy+MruevWyrZr3SGVs+94aYPnB46Lx2uzm+7NdGvsBH7zy7MI8+XJ2X
+                          vjwG8L0gZcc9cp0/vh04Cb7Qy9e8g+CTvuIfh77kMY89yJA/PcokIj63EIo+0MpIvRx3qT0KeXe+
+                          M5yUvrD/y7zWb1Q+sIk0PZi9Db0q2iY+BcKEPiCemr5Y1mg9cKmJPGpsZ75sVb89fJTIPYj6bj2s
+                          wjO+9ls/vpYbfT4qwn4+Uv5IPjBZmb70voS+n+sBvoCssrvC7qi9Y8iNvpyfrr2td3++yGhDPorj
+                          VT5UO5q+oAs3vZhUUj3s2p89ZqV1Prxbg74ocU298A9ZPQ4DAD7LQYi+PvBtPhX6Hr7RFYU+jqt6
+                          PqB51z2TFoo+ALhmu3gFPL0gGB89tCcyvjc/iz5A7r27kKMNPuQt17381889iyGJvgBFkr5gFB6+
+                          ZOiQvbhjl76g5aA81uU0PgAfjbsrQoO+ahORvowFJL5gle09uZw2vu+/ij547349YKZfvvZ9T75k
+                          KDW+RkBSPsD7hTwaIT6+5JysvW3kkT6QGei8hrdEvnrvPz5Y3CY9znVvvnib8T3Ryxq+Gkp+PjB/
+                          2j3+Iwm+HqoHPpqxVL4ozAm+DWYfvs9bFr6KqES+GI1EvjwK3T2rOUC+moaSvpCwLj4lMRq+vvFM
+                          PmyoJD6AqIk7UKwfvgAJMb26/Tq+7A2OvnoDd74A/ni8+8aPPghMpz3g4YW8gHIWO5DtAL3kqqu9
+                          YPfnPCBnED0ACoQ9pHGDvbggVD2+uFG+Cx80vgCQCzqHog6+8jpYPsZ1m77bGxS+WuRyPkppFL4Q
+                          kFA9qKFHvhBrnjzrXQm+WEorPeY97b24MF89uFt0PfZViL3mBiY+QPuYu3A4nj245qC9yhFIPogW
+                          uT1w26s8NAt4veA3RDyMx9q9KBfnPQC+Sjqg23u+6HZ1vhrJY75yOJG9SnBlvkoPDj7e2is+3ACN
+                          vlQSFz4kHny94AqRvrBXrT0zjIs+U6WKPuZhYr4ojWu9xO/AvV4mkb7I4Cm9cMv9PYgd5T21Qps+
+                          s/+GPuDNCjxrAow+hCg9Pi+rH76h55K+nC2mvfNlkD7m8R4+AFnUuyAn2r1wfOk81HcAPkA9+zwq
+                          Q1A+YFLXvA8Pij4jSjK+5itZvsCjIr1abEK+DKr2PaD1RL1+i20+leqFPmZkFD4AfKw5XsYoPun8
+                          iD5AQoI9ok4dPtSSiT0nAom+znR3Ps2ViL6sGpO+0mKOvUjBhb1mpRi+wo97PphcJT3/VY8+4J9E
+                          vR5hQT6Fd4a+2PBxvSjDkr5RSZG+xBAYvhh5Mj6xCHu+yhPEvR8Akr6LQY0+sHh6Pc/GIr7AI/W8
+                          XiBaPm/ekj6BUJA+ct5YPglLhj4GUjQ+pD18vjlwiL52bmU+wk2HvvAjO71q34S+vvx0Pi0GhD40
+                          mv09gy2Evg1rkr7S7O299nfFvcA4Or0Etqs95EuJvgzZoT0t/Hu+a7KYPpJjYT4cqqK9AAT5Oqau
+                          gr4wq9o8W4eTviD7Cz7YJzK+wLapPXRdJb5QwY++EH1wPUCZhrx0A3u9eWeGvkoPhb4kGjy+PiGQ
+                          vmzcmr02FZW9ycOJPokBgz4G75u+qTWZvp1hb76orx0+IANAPuiZRb7LVZY+cHvMPWBqwj2g7UC8
+                          +P9lvsya9D2gKOE9KJOOPTzOED7igEK+AO4CvfJPOT6kjUi+AD+vPcEsNr4rtyy+mmFyPtdZgD72
+                          YiO+Jv9VPkALELz+z7y9O/aKPtg+Qz7QWvc9lcGGPmomQD6AmrS7wysLvr8bkb74TWA9AHzxuSIm
+                          e74+K3M+usx2PsvcmL7GPqS9WpsWPnjqh724dq09iKs8vjDxsLwKMji+c4aKPi7TYj54WJs9AMLd
+                          OwBhLzxx2JW+FhO3vVxb9r3dxpK+nC6bvug9mD2YMaM9lAWkvUFCeb72oxM+EgxVPsDGvD02X1s+
+                          DnlJPt5MAD7KxFc+/tRyvnwUaL3APHs9p1MjvsjaO71ghSA9XLf3vbhbD70o3x0+pW6aPg60ST6x
+                          M5y+ltQnPpDTLj19Yiy+ViUrvuBHj74gTTC8GbeGvvAKXT15noM+HHuYvXJcZj5ZDxC+UomhvWA7
+                          Lbw2Xg8+pcBsvmVQeb5o9AS+ymeGvg1wgD7ITrQ9ViFyPth0U74GdWA+XhAGvr6tSj7vbJc+fOsM
+                          Pm3Ugj7PjI8+yuPzvVq0lb0AsiW96JgZvhrJUr54ZVU9gNsuPmBwU704WB8+rrFyPtjmdL5JA5C+
+                          B9qEvlrOjL1otiU9ogFaPhCLPb2+RJC+srRGPvB5szw04SM+nFNGPhjj9j2m1SU+YjpjPrZQTr7Y
+                          4G++kppHPqxR4r2yY0Q+yJ0ZvfScN76MqJM9Kl1vPvCakT1Gurq9/hJ2vtgGjj34oj89kBJyvTwA
+                          DD4ia2o+wHI3PnhWhj1q4E0+pQ6NPqQwfr7sLCQ+jE7kvaDdGL4kV+S9YbqFPgKeTL6ICTI+qgqI
+                          vtTNh74UHXK+sLhhvuy7fb3lBDm+Ym1dPqxPUb6+m569VL+DviA8mD3zaJY+oFNxPLZIcz6gV7U9
+                          EO72PHFtJb5g5ya9LyCYvqvhdL4gFpC8JikGPozCpz2c4ui9FiyCvSAMxDwadzY+ylN3Pjqlyr0i
+                          ACY+BDpMvjAbUr7gMU88ZAcYvsDpLz0bzDi+kPU/vWANJD3+yDo+zlxWPoCafbvV8RS+R+GYPhYI
+                          4L2D4wi+SCOsvdDTx7xaMls+unwyvrC13DyslcA93toBPjCVkzx8PI++sP3VPMDjyzuUtUO+bn2b
+                          voAESzui+X4+FEw+vhi+HD1OUGQ+TtdyPs72ez5xk2O+KEdCvnhJEb3LQyq+/uvCvUxsrT2GxuW9
+                          AAqCvvDU7DyQzCc9WuYlPihaNL2WhmY+j/mKPiBaL736hpm+0AQpPeNnhb5RpJy+MAEOPQyON77u
+                          vFI+QDAHPrcDG774cVY96JzfPSjWSD1rTCK+1A4kvj/VlD40kaI9BvqBvRA51zzgzkk9pMniPTQw
+                          T77TOpM+RIyrPXQu4z3iLmE+QDFQPPZiNL4w7hI9SuZLPkc4C771Q48+7v8oPsDHlDz+5Gg+clNh
+                          PlSFf745gIy+0YmGvvOmSL679I0+iRQXvujYHj3EXI++zleSvrD3uj04dws+MHwIvQo8ab5F2Dy+
+                          rvl+PnQy7b3Olmw+VnhjPg==
+                      - 0
+                      - !!python/tuple
+                        - 48
+                        - 16
+                      - !!python/tuple
+                        - 16
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - q_proj_weight
+                  - null
+                - - k_proj_weight
+                  - null
+                - - v_proj_weight
+                  - null
+                - - in_proj_bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTI3MDRxAlgDAAAAY3B1cQNLME50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUyNzA0cQFhLjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                      - 0
+                      - !!python/tuple
+                        - 48
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _qkv_same_embed_dim: true
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              add_zero_attn: false
+              batch_first: true
+              bias_k: null
+              bias_v: null
+              dropout: 0.1
+              embed_dim: 16
+              head_dim: 8
+              kdim: 16
+              num_heads: 2
+              training: true
+              vdim: 16
+          - - linear1
+            - !!python/object:torch.nn.modules.linear.Linear
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTMzNDRxAlgDAAAAY3B1cQNNAAJOdHEEUS6AAl1xAFgNAAAAMjY4
+                          OTkyNjM1MzM0NHEBYS4AAgAAAAAAADilKz3ANdQ74mxXvtKSOr4MyRe+ULAAvRYrdz7gGOy8EObi
+                          PBBnEj7AvjM9FBY1PtRkZ77edF6+okB3PrhTBr7ynzU+1N8dviQJxD08H3c+TG7evVSTcr7m9wE+
+                          8Nt4PjAdDj5aGws+MFQavoJaE76wukM+GCxJvRRiGr6gRkA8SGnxvdIOCr6QYlC+WKOYvUpRG75g
+                          FBU8wGKvPF4nfL4QExE9YEYtPpj4Bb6AaXQ9gBaWu7i8FL58SZU9vqENPgD/Jrs40iw9kJ+JPTAy
+                          NL5gtp49kMy9PACqR7tk1WU+mMRyPuQBzr3wZbw9LixQPiC77bwEe3e+8DEEveTHeT5wZTU+Jmkw
+                          PoCh7TxQhvg99PxTPj4TVT7sxWG+CmZcPuIaD760Vy++oqo5vrRb4j0UU2S+LJ6uPT7fLr4gsX08
+                          ZDTWPcz70b2Ye2u9LO6vvUIuXr6gW+U9qAQHPXTotj1QazI9APIrOmjO4L0gcZc8ACoXuviua74A
+                          WS69rOJrvn5QTj7aGSi+qFtbPXK5OD4oxWm+WKC6PWjxdT4W4G0+GH12vfjWgb1gFSm9MGqGPdDi
+                          ibwIW9k9fmtLviwtJ75Oe2c+NtZivn7RWb6gdHU+JHBvPpKrNT54RJy9eHCaPULkEL4IHuy9RIyv
+                          vXTNU76gsLs8ZsMDPuCOjzwM6dc92D11PeD9VbxoXwo9ZB3SveiXIL4A2ly+gLRcu2CV0zzCkSM+
+                          xJ2tvdyOhz2Me1q+5NwlPkQet71047U9unEVPhTwCL4k8Z29xCnwvZDSe74Ioeu9IiMovrAQwT2Y
+                          jru96GCXPRidI70StnS+eD0uvgBVYb2YxV8+uHMqPcZzdj6Iymy+4AYtPLRjzL08SOy9UBZvvrgx
+                          kT1kU789AABvvGh6IT3s0Y09bL+wvUDSEb5eqhK+4Lw1vRJiLj4ymkS+6OyBvQDFaz0eaBM+oEsr
+                          PdBJL74kkfG9VHQjPqCIlD0kVUm+kN+hvLj+q70Q+t+8HrMKPuSdZL5GMw0+aHhLvsYMaj4wu2C+
+                          FPeBvdIUBr4AyCq+YLdrvAx1YL6gM+K84Lo2PghV1D2AWcg90MZevjZ2Pb741cK9KDl3PgSykD3K
+                          KVO+wF84PWA+k71Qj3c9TO4mvuwOaL7UID4+UF5Vvgz/iD1QUCi9zK5hPvDHxj0U520+ZlBWvniZ
+                          E772cFK+QH06vZBnsDzgKgU+VKotvjLMYD6cpCi+YODQPbDkCL44kG+96EhmvQAVgbo4k9U9XJ9y
+                          vrwcAL7Iulq+Hp18vsADeb3sdXc+QD6hvOL0Eb6gdIU9lAv2vT4zab6UJwq+1ELQPVCI4T2gvtm8
+                          SuF/vsZfYb6cbAe+cMDivagdHL4wfuY80FX+vbT82z16zmg+nIe8vQDY3TvWKGE+mHZmvjCr1T1Q
+                          sAs9yJUsvajCOT5Inm2+1HSfvcBcPr3AoWC9JshKviKNEb4I0l2+4CMIPvqcAj56qT8+MF7CPGiT
+                          Xb6aJBw+qHQjPhSDZz4QpaE9YERRPMaeBz6gwyK8qC2lvcgiUr6M//I9gBStvSCAATwIZpo9vH6F
+                          vfj4nz3c0cu9kHIzPayKSz5McrK9IE79vIreQr4mSRO+sDlyPYjVBz1A5Jo7kF2GPFCIzzyY4wq9
+                          TiUzPiJ6aT7UcsM9AF+6vCBotj3gNwQ9WskdPr4PFL4AMnu8/vASPrhWTL5Iwlg+vCayvcy6b75E
+                          GGi+WN2mvSDCADxAi2S9nFhbPvCGmD0Gq0E+YPzPPSA5yb2Uh969oGXavb4bAr7svBI+QEJYvE63
+                          Sb4QC2q+uDZRPab0LD7mcgS+2mdYPjQJgj1QX2Y+lFTbvaB4Mjzk64q9co83vvB3cL0AR2k8cEsf
+                          PvhJ3b16uza+5m1WvnaHAb4Q/Vu+nIK6PZIdbL4A7nA6kG1zvnghyT2YNmM9wIEovQRGTT4IuRy+
+                          OstKPpD3iL2gKbS9GqBpPkggDD4Yehy98KsHvtaSJL7wr6Q8cLpjPTaQaT6AK2U8lHoHvvbXfT5c
+                          aIy91tAUPoKUNz4EPoI99O1XPigMdT2+uBW+TGLFvQ4fNj4cTUs+bgB7vmrvY76AXzg7fDuAvWx3
+                          NT7MwAu+fJLFvf7GRL4sk+29et8hPqq0U75+f16+gMhYPX6HHL5g4Ba+0J1xvbhBiL3gpbS9rDX+
+                          vRiTvb2ANzg8dtFavnwB2b1AQG2+8OARvsBi/Ts4yac9UIolvdyRPL6Aj9U9Zo8Bvs5nJr7gRlA8
+                          UihsPh7caL7+4hE+AulnPjANGL2q0le+SCMnvdywb76S7T0+ivwVvsCkfD5go6698uM7viYtDr7A
+                          i0C9zE+PPaAeHjygTwm9fIDzvaSkoz1i/h++fMF0PiD/MrxmOHA+hLW0vSgDGT3YO0E+Nr90PizT
+                          Rz64QWo+OtdZvgjvAL2AxnC+kGbMPfroZb4A4ie6DmkuvqA9iD0At6g8LNMRPvgv4j1wZ/49vP8d
+                          PsQkiz3MYfg9RC2fPcBuPr2G4E++Opg7PiDD5Txwppe9UPNAPbwwuz1kogy+SDhePiwyfT7Ix4a9
+                          kKGIPAAoTD4QDUu+hhkYPgQN871062a+rPQ2vgDKa73AG6C82MJFPcBR5T22MyY+MOdVvdDGubyK
+                          viw+zELlPQqCFb6aAUE++ARyvZ4rUL4UEs89/EsuPtzJ0z3weYC96OxXPjB3Ib2USd491NT4PbBm
+                          vD1S5ho+BBVbvthruz2cgHo+
+                      - 0
+                      - !!python/tuple
+                        - 32
+                        - 16
+                      - !!python/tuple
+                        - 16
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTM2NjRxAlgDAAAAY3B1cQNLIE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUzNjY0cQFhLiAAAAAAAAAA6AojPUAL1ztq31A+XIHcvWiULD6k/Qa+AARAuzCt3b14AuE9
+                          qmUWPmTQjT0EeLu9hE2zPZa9XT6oGVQ+uuoFvvbXAr60hTA+xLdvvhLrSL5O6wy+KItNvVjI/z1O
+                          thw+1KJIvnC0DD4uIHC+QMoivMTbHT4A0cg7AH33O2YGXT4=
+                      - 0
+                      - !!python/tuple
+                        - 32
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              in_features: 16
+              out_features: 32
+              training: true
+          - - dropout
+            - !!python/object:torch.nn.modules.dropout.Dropout
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              inplace: false
+              p: 0.1
+              training: true
+          - - linear2
+            - !!python/object:torch.nn.modules.linear.Linear
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTI1NDRxAlgDAAAAY3B1cQNNAAJOdHEEUS6AAl1xAFgNAAAAMjY4
+                          OTkyNjM1MjU0NHEBYS4AAgAAAAAAAACZE7pgyi6+1HLhvTkiHD4B1i++OEuHPZD9kD1YVja9BOwl
+                          viuWDT4QYtm8ksQSvtRCC74Cz6y9nqiDPUDHFz3+RPW9KKgHviVOBD7F3Sy+1XYvPqgujT0MBwa9
+                          V/kgPuTjkD3vQA8+26YEPrAZgbzOJs89sEN8PYzgaD0OBbK9N+EsvhQQMb0XU4a9dASPvQ605r1U
+                          Yy89fjAjvh9DBz4ZITI+P3kOvpCsBb46QeS9IGA8PbBSGD1XWRY+RCF3PcSykb1m3JY9WI/TvCjL
+                          nzzWKqa9dHp/PQCkeLnGF569ggK9veB3R70uWi2+7HRWvViNAb3HhBG+7jruPbqbmL3Iunw9invZ
+                          PTzfxr0XKwo+KCzwvGb4a72WzVS90KQdPXn2IT7h3Nm9hENaPTKUKr4gRa07ON14PRDzKbxLQPa9
+                          ELrQvLzlBD0Fyx4+X7kSPnquIb64Z2i9y+olPnrqzj0f5gs+P7vevQB+ZjwAxwy7oJG7PBgWej3Q
+                          qq88x5QDvpIE1z3rPSE+TKwgvR45gT0DNR4+eIX2vV6lhj1IPq688yAgPoc4qr0uSKi9XHlWPc7A
+                          mL0OuMC9vsvKPYViCL4IBwy+klryPY7U5b2i8649w7EyPiBJej3GmS++MBu1vNgbo7z/AJO9TEAZ
+                          vd9wAj7gfWE9+OQhvuFDCz4UUa69EgyKvVDKKDzYM3Y9T5K2vZClArwcRc698cQzPvhzTT37+au9
+                          yPKVPQu9DT6nLAI+AQzkvSB9Gjw5ejE+OI2SPFqyHr4+q7m98FmRPDyDKD3iDO89phgvvnJLgT0k
+                          3YK9d9oovmyKyb0IDxC+m1cCPglkKT53NRI+thLSPeTztr0KRYM9VZaIvU7NH74mK/q9oZ8xvrCC
+                          bz0dhh8+IAbQOxD7Q7we3KI9QLuGO3szC75n1jA+cIgevpjUnr2pOyg+elP4PaetKL4E9Sc915Ak
+                          vgy7kj22XrM9FJcIPXLY/D0QbF08j3UCvvb3rj1T9RS+wwkpvqkqBz4JLsK9YB/0u2oo7T2yMCy+
+                          yvzBPWa2FL6s1S09MJCPvOMvID6DMyy+AOLiuX2RD754NS++IU8hPiYC1j24Q229eqlxveDFjrtc
+                          STs9w7UGvjy1jj3wk228IOQLvHbnE75KLmS92nGjveB5mjwUOCm+cIVfPUDDCDsw8iM9otwbvuN0
+                          Az41yjM+xM8vPYtxib2q3Oc9YJ+9O9bPpT3oa6+8yvadPTBTvTyqwcE9cDGQvODshT3gGPg76sTl
+                          PbGVnb1u9qy9oPT9vEJ78T3O16Y9MPAwvhg83Lwwbn49xCSDvfjbqLyALMk76CRXPTaamL2wEhy8
+                          gjvOvabRqz0QbX09abMmPhD6dbz0qWo9mLkYvTjibz0PAik+ABJFO7sZlr3anyG+ssLAvcFrLz7b
+                          rDM+JiSbPfrI8j0e9qc94o8vvoABQr3bawy+Z0YdPsNEAz4mIte9KNF8PXzVUb2Ats66zY8tPlAH
+                          xrzAgn48nnbjvcVHrb11eua9a3YoPk8SK7454jS+hifxvYCmPbzg09c77ZvmvbA5xTyTgSs+4F6o
+                          vObc1T3EFSu98vtgvdCHyrwe0vE9UGqVveQ2Xj3YEPU8MJo9PaHfIT7UE8u9/Pb7vbbqFL5OrCe+
+                          0LNOPEo/lz0A+zo9wMQwvtKshD3/pZ29VJkgvbD3B763qgS+pbzjvfkzs70cbMi9RZkbPjIWF763
+                          Gho+gU4uvrSk1L3u16M9SAkDvmCdrTsy7Qa+Xt7BPXsgKL5mIQK+oLp1vJbW+T3oBhK+MTMwvugu
+                          ED3eOKE9/nrFPbB29jyApL07pMoQPUs+Iz7eceW9kMQpvoU9wb1bky8+2AGJPe66fr14Onw9OJGF
+                          vLU3pr2GlNU9C5IRPpycVT3oolo9NI4qvn+Ul71MLwo9TiDiPXE8Jj78R2292kT1vXu9Jj4C6CW+
+                          lnXtPUqSlj1ohlU9oa0NPoA1PrzRSTA+2LkjPaY1cL2qTOi9A04xPu8BFz65eCa+7mA0vuDrjDwA
+                          7rw8j0H9vcOji70sVls94mvJvajfrbxsiQK9pMMLvU2YFz5nkce9sGEXvJClWj1Aku08eEqFvCbK
+                          3z1A+UA8sOEKvtt+r7168Ve9hk2nPZJdnr2ytw++1+ELPgZrLb6AzMk74DTWOz59bb35Ioi9lniN
+                          PZeFFT4uI8g9Y5UAPl97Cz6XFik+7TQHPjptoz0d9yU+EBxaPfZbyj2C2NM9QNggPNDgEb6eZoc9
+                          wJROu0hVtb3ueJw9yMbHvB52cr1Nnwm+KgdjvfAYIb5O9vc9gjDHvS5NlL3i0TC+0v3TPS+cHz59
+                          1se9KPEOviyfZr0nyBQ+Og7+PQg+7TzannW9dzvfvYZ2jL0Kt949GFXhPOR1Jb2fuhI+KLjGvfOh
+                          471B5R8+xSsSvs/bCr6MzPG9/6wQPopO/z1nhZm9R3wjPkA5aTzFnLC9vtbZPQIV9j1jDam9kAqE
+                          vJ1+CL7sq289QCtlu9bixr1jrCy+bvf8PWRKjb0CMxW+92oJPtEBND5rshs+PG0avaqliz1INFO9
+                          oMQmvgjjAb7+f9Y9FxIpPkLHzz1K3YW9GFwZvmPpGT70LhC9E4PavbJdsT2qdMI9DF4Pvu+wpL0o
+                          DF49zKsTviosFr7Ogfs9o7AuvjADGr2OsLe91jXOPaZQ6D3ONb09mC8Ivjp0BL58+2i9OM/JvUJF
+                          +b1buTS+xqfJPeSbq72N/yg+
+                      - 0
+                      - !!python/tuple
+                        - 16
+                        - 32
+                      - !!python/tuple
+                        - 32
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTM0MjRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUzNDI0cQFhLhAAAAAAAAAAUd4pvrotuz1MuQ29SFQFvYAa6Tx9cww+Ie0fPoA73rodSBQ+
+                          wPkXO2f7H75qLMg9spbevdxhwb2gnPE72b+XvQ==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              in_features: 32
+              out_features: 16
+              training: true
+          - - norm1
+            - !!python/object:torch.nn.modules.normalization.LayerNorm
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTQzMDRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzU0MzA0cQFhLhAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/
+                          AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPw==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTM1ODRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUzNTg0cQFhLhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              elementwise_affine: true
+              eps: 1.0e-05
+              normalized_shape: !!python/tuple
+              - 16
+              training: true
+          - - norm2
+            - !!python/object:torch.nn.modules.normalization.LayerNorm
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - - - weight
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTE5MDRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUxOTA0cQFhLhAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/
+                          AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPw==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+                - - bias
+                  - !!python/object/apply:torch._utils._rebuild_parameter
+                    - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                      - !!python/object/apply:torch.storage._load_from_bytes
+                        - !!binary |
+                          gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                          AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                          aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                          Z2UKcQFYDQAAADI2ODk5MjYzNTM5MDRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                          OTI2MzUzOTA0cQFhLhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+                      - 0
+                      - !!python/tuple
+                        - 16
+                      - !!python/tuple
+                        - 1
+                      - false
+                      - !!python/object/apply:collections.OrderedDict
+                        - []
+                    - true
+                    - !!python/object/apply:collections.OrderedDict
+                      - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              elementwise_affine: true
+              eps: 1.0e-05
+              normalized_shape: !!python/tuple
+              - 16
+              training: true
+          - - dropout1
+            - !!python/object:torch.nn.modules.dropout.Dropout
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              inplace: false
+              p: 0.1
+              training: true
+          - - dropout2
+            - !!python/object:torch.nn.modules.dropout.Dropout
+              _backward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _buffers: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _is_full_backward_hook: null
+              _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              _modules: !!python/object/apply:collections.OrderedDict
+              - []
+              _non_persistent_buffers_set: !!set {}
+              _parameters: !!python/object/apply:collections.OrderedDict
+              - []
+              _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+              - []
+              inplace: false
+              p: 0.1
+              training: true
+        _non_persistent_buffers_set: !!set {}
+        _parameters: !!python/object/apply:collections.OrderedDict
+        - []
+        _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        activation: !!python/name:torch.nn.functional.relu ''
+        norm_first: false
+        training: true
+    - - linear_decoder
+      - !!python/object:torch.nn.modules.linear.Linear
+        _backward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _buffers: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _is_full_backward_hook: null
+        _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        _modules: !!python/object/apply:collections.OrderedDict
+        - []
+        _non_persistent_buffers_set: !!set {}
+        _parameters: !!python/object/apply:collections.OrderedDict
+        - - - weight
+            - !!python/object/apply:torch._utils._rebuild_parameter
+              - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                - !!python/object/apply:torch.storage._load_from_bytes
+                  - !!binary |
+                    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                    Z2UKcQFYDQAAADI2ODk5MjYzNTMxMDRxAlgDAAAAY3B1cQNLEE50cQRRLoACXXEAWA0AAAAyNjg5
+                    OTI2MzUzMTA0cQFhLhAAAAAAAAAAbBtoPg4FZr6wWgc9nL8hPhBw3jy8sSG+hHKcvfghUT1Y5g2+
+                    oI52vUAcm7tgClI9CIKVPe7/B764hPk9Kl9zPg==
+                - 0
+                - !!python/tuple
+                  - 1
+                  - 16
+                - !!python/tuple
+                  - 16
+                  - 1
+                - false
+                - !!python/object/apply:collections.OrderedDict
+                  - []
+              - true
+              - !!python/object/apply:collections.OrderedDict
+                - []
+          - - bias
+            - !!python/object/apply:torch._utils._rebuild_parameter
+              - !!python/object/apply:torch._utils._rebuild_tensor_v2
+                - !!python/object/apply:torch.storage._load_from_bytes
+                  - !!binary |
+                    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+                    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+                    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+                    Z2UKcQFYDQAAADI2ODk5MjYzNTI2MjRxAlgDAAAAY3B1cQNLAU50cQRRLoACXXEAWA0AAAAyNjg5
+                    OTI2MzUyNjI0cQFhLgEAAAAAAAAAhnsLPg==
+                - 0
+                - !!python/tuple
+                  - 1
+                - !!python/tuple
+                  - 1
+                - false
+                - !!python/object/apply:collections.OrderedDict
+                  - []
+              - true
+              - !!python/object/apply:collections.OrderedDict
+                - []
+        _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+        - []
+        in_features: 16
+        out_features: 1
+        training: true
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  add_static: 1
+  d_out: 1
+  d_static: 1
+  elevation: true
+  latlon: false
+  n_task: 1
+  phases_as_input: null
+  target_list:
+  - Small_leaved_lime:leaf_unfolding
+  training: true
+target_scaler:
+  Small_leaved_lime:leaf_unfolding: !!python/tuple
+  - !!python/object/apply:numpy.core.multiarray.scalar
+    - &id001 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - false
+      - true
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - !!binary |
+      3dkRzH/DXUA=
+  - !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      qJuSEIL1JkA=
